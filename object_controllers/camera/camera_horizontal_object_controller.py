@@ -1,4 +1,4 @@
-import thread
+import threading
 
 from object_controllers.object_controller import ObjectController
 from services.position.camera_position_service import CameraPositionService
@@ -14,7 +14,9 @@ class CameraHorizontalObjectController(ObjectController):
 
     def start(self):
         try:
-            thread.start_new_thread(self.camera_tracking_service.run)
+            t=threading.Thread(target=self.camera_tracking_service.run)
+            t.daemon = True  # set thread to daemon ('ok' won't be printed in this case)
+            t.start()
         except:
             print "Error: unable to start thread"
 
