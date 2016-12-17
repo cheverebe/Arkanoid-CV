@@ -1,3 +1,4 @@
+from object_controllers.camera.camera_horizontal_object_controller import CameraHorizontalObjectController
 from objects.balls.ball_object import BallObject
 from scenes.app_scene import AppScene
 
@@ -17,5 +18,6 @@ class LevelScene(AppScene):
             int(float(self.dimensions[1]))/2,
         ]
         ball = BallObject(start_position, self.resize_factor)
+        controller = CameraHorizontalObjectController([ball])
+        controller.start()
         self._game_objects.append(ball)
-

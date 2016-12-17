@@ -1,4 +1,5 @@
 import cv2
+import thread
 
 from utils.image_utils import ImageUtils
 
@@ -20,6 +21,10 @@ class GameObject(object):
 
     def get_position(self):
         return self.position
+
+    def set_position(self, position):
+        self.position = position
+        return self
 
     def get_dimensions(self):
         return self.dimensions
