@@ -1,8 +1,10 @@
 import cv2
 import numpy as np
 
+from services.position.position_service import PositionService
 
-class CameraTrackingService(object):
+
+class CameraPositionService(PositionService):
     window_name = 'select object'
 
     def __init__(self):
@@ -29,13 +31,6 @@ class CameraTrackingService(object):
         self.subscribers = []
 
         self.initialize_windows()
-
-    def add_subscriber(self, subscriber):
-        self.subscribers.append(subscriber)
-
-    def notify_position_to_subscribers(self, position):
-        for subscriber in self.subscribers:
-            subscriber.notify_position(position)
 
     def get_frame(self):
         ret, frame = self.cap.read()

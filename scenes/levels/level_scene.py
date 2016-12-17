@@ -1,5 +1,6 @@
 from object_controllers.camera.camera_horizontal_object_controller import CameraHorizontalObjectController
 from objects.balls.ball_object import BallObject
+from objects.tubes.tube_object import TubeObject
 from scenes.app_scene import AppScene
 
 
@@ -13,11 +14,19 @@ class LevelScene(AppScene):
 
     def _init_objects(self):
         self._game_objects = []
-        start_position = [
+        ball_start_position = [
             int(float(self.dimensions[0]))/2,
             int(float(self.dimensions[1]))/2,
         ]
-        ball = BallObject(start_position, self.resize_factor)
-        controller = CameraHorizontalObjectController([ball])
-        controller.start()
+        ball = BallObject(ball_start_position, self.resize_factor)
         self._game_objects.append(ball)
+
+        tube_start_position = [
+            int(float(self.dimensions[0])*3/4),
+            int(float(self.dimensions[1])/2),
+        ]
+        tube = TubeObject(tube_start_position, self.resize_factor)
+
+        controller = CameraHorizontalObjectController([tube])
+        controller.start()
+        self._game_objects.append(tube)
