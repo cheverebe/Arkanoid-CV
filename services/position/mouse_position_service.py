@@ -9,4 +9,4 @@ class MousePositionService(PositionService):
         while True:
             pos_y, pos_x = autopy.mouse.get_pos()
             self.notify_position_to_subscribers((pos_x, pos_y))
-            time.sleep(0.05)
+            time.sleep(self.sleep_time)

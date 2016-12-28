@@ -1,17 +1,18 @@
 import cv2
-import thread
 
 from utils.image_utils import ImageUtils
 
 
 class GameObject(object):
     SPRITE_PATH = 'img/sprites/ball.png'
+    mass = 0
 
-    def __init__(self, start_position, resize_factor):
+    def __init__(self, start_position, resize_factor, speed=[0, 0]):
         self.sprite = cv2.imread(self.SPRITE_PATH)
         self.dimensions = self.sprite.shape[:2]
         self.adapt_size(resize_factor)
         self.position = start_position
+        self.speed = speed
 
     def collides(self, other_object):
         return False
@@ -35,3 +36,9 @@ class GameObject(object):
 
     def adapt_position(self, resize_factor):
         self.position = [int(v*resize_factor) for v in self.position]
+
+    def get_mass(self):
+        return self.mass
+
+    def moves_independently(self):
+        raise NotImplementedError

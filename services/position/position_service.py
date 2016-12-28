@@ -1,4 +1,6 @@
 class PositionService(object):
+    sleep_time = 0.05
+
     def __init__(self):
         self.subscribers = []
 
