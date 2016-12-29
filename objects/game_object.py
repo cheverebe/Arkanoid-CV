@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 
 from utils.image_utils import ImageUtils
 
@@ -14,8 +15,13 @@ class GameObject(object):
         self.position = start_position
         self.speed = speed
 
-    def collides(self, other_object):
-        return False
+    def colliding_corners(self, other_object):
+        colliding_corners = []
+        corners = other_object.get_corners()
+        for i in range(len(corners)):
+            if self.in_area(corners[i]):
+                colliding_corners.append(i)
+        return colliding_corners
 
     def get_image(self):
         return self.sprite
@@ -42,3 +48,26 @@ class GameObject(object):
 
     def moves_independently(self):
         raise NotImplementedError
+
+    def get_corners(self):
+        x_radius = int(self.dimensions[0]/2.0)
+        y_radius = int(self.dimensions[1]/2.0)
+        return [
+            np.array(self.position) - [x_radius, y_radius],   # TOP LEFT
+            np.array(self.position) - [-x_radius, y_radius],   # TOP RIGHT
+            np.array(self.position) - [-x_radius, -y_radius],   # BOTTOM RIGHT
+            np.array(self.position) - [x_radius, -y_radius],   # BOTTOM LEFT
+        ]
+
+    def in_area(self, position):
+        x_radius = int(self.dimensions[0]/2.0)
+        y_radius = int(self.dimensions[1]/2.0)
+        x = self.position[0]
+        y = self.position[1]
+        return x + x_radius > position[0] > x - x_radius and y + y_radius > position[1] > y - y_radius
+
+    def set_speed(self, new_speed):
+        self.speed = new_speed
+
+    def get_speed(self, new_speed):
+        return self.speed

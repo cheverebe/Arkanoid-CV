@@ -1,5 +1,6 @@
 import numpy as np
 
+
 class PsysicsUtils(object):
     @staticmethod
     def new_position(current_position, speed, time_delta):

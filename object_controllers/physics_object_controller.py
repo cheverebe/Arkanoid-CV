@@ -1,5 +1,3 @@
-import threading
-
 from object_controllers.object_controller import ObjectController
 from services.time.time_service import TimeService
 from utils.physics_utils import PsysicsUtils
@@ -8,17 +6,12 @@ from utils.physics_utils import PsysicsUtils
 class PhysicsObjectController(ObjectController):
     def __init__(self, object):
         super(PhysicsObjectController, self).__init__(object)
-        self.time_service = TimeService()
+        self.time_service = TimeService.get_instance()
         self.time_service.add_subscriber(self)
         self.last_time = None
 
     def start(self):
-        try:
-            t=threading.Thread(target=self.time_service.run)
-            t.daemon = True  # set thread to daemon ('ok' won't be printed in this case)
-            t.start()
-        except:
-            print "Error: unable to start thread"
+        pass
 
     def notify_time(self, new_time):
         if self.last_time is not None:

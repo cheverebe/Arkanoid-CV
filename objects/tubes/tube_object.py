@@ -1,5 +1,5 @@
-from objects.controlled_object import ControlledObject
+from objects.moving_object import MovingObject
 
 
-class TubeObject(ControlledObject):
+class TubeObject(MovingObject):
     SPRITE_PATH = 'img/sprites/car.png'
