@@ -8,4 +8,4 @@ class BoundaryGameObject(GameObject):
 
     def __init__(self, start_position, resize_factor, size, speed=[0, 0]):
         super(BoundaryGameObject, self).__init__(start_position, resize_factor, speed)
-        self.sprite = np.zeros((size[0], size[1], 1), np.uint8)
+        self.sprite = np.zeros((size[0], size[1], 4), np.uint8)

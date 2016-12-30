@@ -9,7 +9,7 @@ class GameObject(object):
     mass = 0
 
     def __init__(self, start_position, resize_factor, speed=[0, 0]):
-        self.sprite = cv2.imread(self.SPRITE_PATH)
+        self.sprite = cv2.imread(self.SPRITE_PATH, -1)
         self.dimensions = self.sprite.shape[:2]
         self.adapt_size(resize_factor)
         self.position = start_position

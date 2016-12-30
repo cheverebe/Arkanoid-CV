@@ -28,7 +28,7 @@ class AppScene(object):
         return image
 
     def _init_window(self):
-        self.background = cv2.imread(self.BG_IMAGE)
+        self.background = ImageUtils.load_img_with_alpha(self.BG_IMAGE)
         self.dimensions = self.background.shape[:2]
         self._adapt_to_screen()
 
