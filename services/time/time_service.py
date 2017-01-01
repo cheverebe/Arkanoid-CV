@@ -3,7 +3,7 @@ import time
 
 
 class TimeService(object):
-    sleep_time = 0.02
+    sleep_time = 0.01
     instance = None
 
     def __init__(self):

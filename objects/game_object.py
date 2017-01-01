@@ -8,8 +8,11 @@ class GameObject(object):
     SPRITE_PATH = 'img/sprites/ball.png'
     mass = 0
 
+    def get_sprite(self):
+        return cv2.imread(self.SPRITE_PATH, -1)
+
     def __init__(self, start_position, resize_factor, speed=[0, 0]):
-        self.sprite = cv2.imread(self.SPRITE_PATH, -1)
+        self.sprite = self.get_sprite()
         self.dimensions = self.sprite.shape[:2]
         self.adapt_size(resize_factor)
         self.position = start_position
@@ -17,9 +20,9 @@ class GameObject(object):
 
     def colliding_corners(self, other_object):
         colliding_corners = []
-        corners = other_object.get_corners()
+        corners = self.get_corners()
         for i in range(len(corners)):
-            if self.in_area(corners[i]):
+            if other_object.in_area(corners[i]):
                 colliding_corners.append(i)
         return colliding_corners
 
@@ -60,14 +63,13 @@ class GameObject(object):
         ]
 
     def in_area(self, position):
-        x_radius = int(self.dimensions[0]/2.0)
-        y_radius = int(self.dimensions[1]/2.0)
-        x = self.position[0]
-        y = self.position[1]
-        return x + x_radius > position[0] > x - x_radius and y + y_radius > position[1] > y - y_radius
+        corners = self.get_corners()
+        mn = corners[0]
+        mx = corners[2]
+        return mn[0] <= position[0] and mn[1] <= position[1] and mx[0] >= position[0] and mx[1] >= position[1]
 
     def set_speed(self, new_speed):
         self.speed = new_speed
 
-    def get_speed(self, new_speed):
+    def get_speed(self):
         return self.speed

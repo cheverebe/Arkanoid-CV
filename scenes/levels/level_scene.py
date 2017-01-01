@@ -16,40 +16,40 @@ class LevelScene(AppScene):
         return list(self._game_objects)
 
     def _init_boundaries(self):
-        vertical_boundary_size = [30, self.dimensions[1]]
+        gap = 40
+        vertical_boundary_size = [self.dimensions[0], 30]
         # LEFT------------------------------
         left_bound_start_position = [
-            0,
-            int(float(self.dimensions[1]))/2,
+            int(float(self.dimensions[0]))/2,
+            gap,
         ]
-        left_bound = BoundaryGameObject(left_bound_start_position, self.resize_factor, vertical_boundary_size)
+        left_bound = BoundaryGameObject(left_bound_start_position, 1, vertical_boundary_size)
         self._game_objects.append(left_bound)
 
         # RIGHT------------------------------
         right_bound_start_position = [
-            self.dimensions[0],
-            int(float(self.dimensions[1]))/2,
+            int(float(self.dimensions[0]))/2,
+            self.dimensions[1] - gap,
         ]
-        right_bound = BoundaryGameObject(right_bound_start_position, self.resize_factor, vertical_boundary_size)
+        right_bound = BoundaryGameObject(right_bound_start_position, 1, vertical_boundary_size)
         self._game_objects.append(right_bound)
 
-        horizontal_boundary_size = [self.dimensions[0], 30]
-        # TOP------------------------------
+        horizontal_boundary_size = [30, self.dimensions[1]]
+        # # TOP------------------------------
         top_bound_start_position = [
-            int(float(self.dimensions[0]))/2,
-            0
+            gap,
+            int(float(self.dimensions[1]))/2,
         ]
-        top_bound = BoundaryGameObject(top_bound_start_position, self.resize_factor, horizontal_boundary_size)
+        top_bound = BoundaryGameObject(top_bound_start_position, 1, horizontal_boundary_size)
         self._game_objects.append(top_bound)
 
         # BOTTOM------------------------------
         bottom_bound_start_position = [
-            int(float(self.dimensions[0]))/2,
-            self.dimensions[1]
+            self.dimensions[0]-gap,
+            int(float(self.dimensions[1]))/2,
         ]
-        bottom_bound = BoundaryGameObject(bottom_bound_start_position, self.resize_factor, horizontal_boundary_size)
+        bottom_bound = BoundaryGameObject(bottom_bound_start_position, 1, horizontal_boundary_size)
         self._game_objects.append(bottom_bound)
-
 
     def _init_objects(self):
         self._game_objects = []
