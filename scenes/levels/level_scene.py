@@ -6,6 +6,7 @@ from object_controllers.physics_object_controller import PhysicsObjectController
 from objects.balls.ball_object import BallObject
 from objects.blocks.block_object import BlockObject
 from objects.boundaries.boundary_object import BoundaryGameObject
+from objects.text.text_object import TextObject
 from objects.tubes.tube_object import TubeObject
 from scenes.app_scene import AppScene
 
@@ -13,12 +14,15 @@ from scenes.app_scene import AppScene
 class LevelScene(AppScene):
 
     def __init__(self):
-        super(LevelScene, self).__init__()
         self.lives_left = 4
         self.score = 0
+        super(LevelScene, self).__init__()
 
     def get_objects(self):
         return list(self._game_objects)
+
+    def get_text_objects(self):
+        return list(self._text_objects)
 
     def _init_boundaries(self):
         gap = 10
@@ -172,9 +176,27 @@ class LevelScene(AppScene):
         self._game_objects.append(block)
         self.blocks_left += 1
 
+    def _init_text_objects(self):
+        self._text_objects = []
+        start_position = (40, 40)
+        color = (255, 255, 255)
+        lives_text = TextObject(start_position, self.lives_text(), self.resize_factor, color)
+        lives_text.get_text = self.lives_text
+        start_position = (40, 100)
+        score_text = TextObject(start_position, self.score_text(), self.resize_factor, color)
+        score_text.get_text = self.score_text
+
+        self._text_objects.append(lives_text)
+        self._text_objects.append(score_text)
+
+    def score_text(self):
+        return 'Score: ' + str(self.score)
+
+    def lives_text(self):
+        return 'Lives: ' + str(self.lives_left)
+
     def _init_objects(self):
         self._game_objects = []
-        self._text_objects = []
 
         self._init_boundaries()
         self._init_blocks()
@@ -194,6 +216,9 @@ class LevelScene(AppScene):
         controller.start()
         ball_controller.start()
         self._game_objects.append(tube)
+
+        self._init_text_objects()
+
         ch = CollisionHandler(self._game_objects, self.handle_collision)
 
     def handle_collision(self, active_object, other_object, colliding_corners):

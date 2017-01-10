@@ -50,3 +50,7 @@ class ImageUtils(object):
             return img
         else:
             raise ValueError
+
+    @classmethod
+    def insert_text(cls, text, position, image, color=(255, 255, 255), scale=1):
+        cv2.putText(image, text, position, cv2.FONT_HERSHEY_SIMPLEX, scale, color, thickness=3)

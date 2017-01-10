@@ -15,16 +15,25 @@ class AppScene(object):
     def render_object(game_object, image):
         ImageUtils.insert_sprite(game_object.get_image(), game_object.get_position(), image)
 
+    @staticmethod
+    def render_text(text_object, image):
+        ImageUtils.insert_text(text_object.get_text(), text_object.get_position(), image, text_object.get_color())
+
     def _init_objects(self):
         raise NotImplementedError
 
     def get_objects(self):
         raise NotImplementedError
 
+    def get_text_objects(self):
+        raise NotImplementedError
+
     def get_image(self):
         image = self.background.copy()
         for game_object in self.get_objects():
             self.render_object(game_object, image)
+        for text_object in self.get_text_objects():
+            self.render_text(text_object, image)
         return image
 
     def _init_window(self):
